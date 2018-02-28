@@ -23,7 +23,7 @@ export default function parseGraphQL(options) {
     try {
       return ({
         schema: await getSchema(options, options.dynamicSchema),
-        graphiql: true,
+        graphiql: options.graphiql,
       });
     } catch (e) {
       console.error(e);
