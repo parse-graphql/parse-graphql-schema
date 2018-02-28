@@ -16,6 +16,7 @@ function defineLazyProperty(object, key, valueFunc) {
         enumerable: true,
         value: valueFunc(),
       });
+      console.log(key, this[key]);
       return this[key];
     },
   });

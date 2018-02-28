@@ -1,7 +1,7 @@
 import { GraphQLObjectType } from 'graphql';
 import JSON from 'graphql-type-json';
 import { mapValues } from 'lodash';
-import { property } from 'lodash/fp';
+import { property, constant } from 'lodash/fp';
 import mapType from './mapType';
 
 const specialResolvers = {
@@ -13,7 +13,7 @@ const specialResolvers = {
 
 const standardResolver = key => item => item.get(key);
 
-export default ({ className, fields }) => (typeMap) => () => {
+export default ({ className, fields }) => (typeMap) => constant((() => {
   const propertyFields = () => mapValues(fields, (data, key) => ({
     type: mapType(data, typeMap),
     resolve: specialResolvers[key] || standardResolver(key),
@@ -29,4 +29,4 @@ export default ({ className, fields }) => (typeMap) => () => {
       },
     }),
   });
-};
+})());

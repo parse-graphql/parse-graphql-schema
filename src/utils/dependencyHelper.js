@@ -18,6 +18,7 @@ function dependencyHelper(defaultData, initializerMap) {
       key,
       () => initializerMap[key](dependencies)
     );
+    return dependencies;
   }, { ...defaultData });
 }
 

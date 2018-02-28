@@ -1,7 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
-import moment from 'moment';
-import { identity } from 'lodash';
 
 const parseValue = dateString => new Date(dateString);
 

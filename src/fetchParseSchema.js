@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { get } from 'lodash';
 
-export default async function fetchParseSchema({ serverUrl, appId, masterKey }) {
+export default async function fetchParseSchema({ serverURL, appId, masterKey }) {
   const response = await axios({
     method: 'get',
-    url: `${serverUrl}/schemas`,
+    url: `${serverURL}/schemas`,
     headers: {
       'X-Parse-Application-Id': appId,
       'X-Parse-Master-Key': masterKey,
