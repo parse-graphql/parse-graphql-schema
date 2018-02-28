@@ -1,0 +1,25 @@
+{
+  "name": "parse-server-graphql",
+  "version": "0.0.0",
+  "main": "index.js",
+  "author": "stephentuso",
+  "license": "MIT",
+  "scripts": {
+    "build": "babel src -d lib"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.1",
+    "graphql-list-fields": "^2.0.1",
+    "graphql-type-json": "^0.2.0",
+    "lodash": "^4.17.5",
+    "parse": "^1.11.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-3": "^6.24.1"
+  }
+}

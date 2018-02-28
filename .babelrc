@@ -1,0 +1,9 @@
+{
+  "presets": [
+    ["env", {
+      "loose": true
+    }],
+    "stage-3"
+  ],
+  "plugins": ["add-module-exports"]
+}
