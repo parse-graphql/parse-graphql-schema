@@ -2,8 +2,8 @@ import graphqlHTTP from 'express-graphql';
 import generateSchema from './generateSchema';
 import fetchParseSchema from './fetchParseSchema';
 import Parse from 'parse/node';
-
-console.log('TEST');
+import express from 'express';
+import sessionTokenMiddleware from './sessionTokenMiddleware';
 
 const getSchema = (() => {
   let schema;
@@ -11,22 +11,35 @@ const getSchema = (() => {
     if (!schema || alwaysRecreate) {
       schema = generateSchema(await fetchParseSchema(options));
     }
-    console.log(schema);
     return schema;
   }
 })();
 
+function parseGraphQLExpress(options) {
+  const {
+    graphiql,
+    parseSchema,
+    dynamicSchema,
+  } = options;
+
+  const schema = parseSchema && generateSchema(parseSchema);
+
+  const app = express();
+  app.use(
+    '/',
+    sessionTokenMiddleware,
+    graphqlHTTP(async () => ({
+      graphiql,
+      schema: schema || await getSchema(options, dynamicSchema),
+    })),
+  );
+}
+
 export default function parseGraphQL(options) {
-  Parse.initialize(options.appId);
+  Parse.initialize(options.appId, options.javascriptKey);
   Parse.serverURL = options.serverURL;
-  return graphqlHTTP(async () => {
-    try {
-      return ({
-        schema: await getSchema(options, options.dynamicSchema),
-        graphiql: options.graphiql,
-      });
-    } catch (e) {
-      console.error(e);
-    }
-  });
+  return graphqlHTTP(async () => ({
+    graphiql: options.graphiql,
+    schema: await getSchema(options, options.dynamicSchema),
+  }));
 };

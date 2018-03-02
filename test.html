@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/parse/1.11.0/parse.min.js"></script>
+<script>
+  Parse.initialize('parse-server-test')
+  Parse.serverURL = 'http://localhost:1337/parse'
+  Parse.User.logIn('test', 'test').then((user) => {
+    const query = user.relation('foo').query();
+    console.log(query.toJSON());
+    const query2 = new Parse.Query('Test').limit(10).equalTo("name", "test");
+    console.log(query2.toJSON());
+    console.log(query.withJSON(query2.toJSON()).toJSON());
+    console.log(query.toJSON());
+    return new Parse.Query('_User').ascending('objectId').addDescending('createdAt').find()
+  }).then(console.log)
+</script>
+</html>

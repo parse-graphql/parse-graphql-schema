@@ -1,8 +1,10 @@
 import { GraphQLObjectType } from 'graphql';
-import JSON from 'graphql-type-json';
-import { mapValues } from 'lodash';
-import { property, constant } from 'lodash/fp';
+import { mapValues, once } from 'lodash';
+import { property } from 'lodash/fp';
 import mapType from './mapType';
+import queryField from './queryField'
+import { or } from './utils/logic'
+import Object from './types/Object';
 
 const specialResolvers = {
   objectId: property('id'),
@@ -11,22 +13,40 @@ const specialResolvers = {
   updatedAt: property('updatedAt'),
 };
 
-const standardResolver = key => item => item.get(key);
+const normalResolver = key => item => item.get(key);
 
-export default ({ className, fields }) => (typeMap) => constant((() => {
-  const propertyFields = () => mapValues(fields, (data, key) => ({
-    type: mapType(data, typeMap),
-    resolve: specialResolvers[key] || standardResolver(key),
-  }));
+const basicField = (typeMap) => (data, key) => mapType(data, typeMap) && ({
+  type: mapType(data, typeMap),
+  resolve: specialResolvers[key] || normalResolver(key),
+});
+
+const typeFields = (typeMap, data, key) => ({
+  Relation: () => queryField(
+    data.targetClass,
+    mapType({ type: data.targetClass }, typeMap),
+    item => item.relation(key).query()
+  ),
+});
+
+const getTypeField = (typeMap) => (data, key) => {
+  const field = typeFields(typeMap, data, key)[data.type];
+  return field && field();
+}
+
+export default ({ className, fields }) => (typeMap) => once(() => {
+  const propertyFields = () => mapValues(fields, or(
+    getTypeField(typeMap),
+    basicField(typeMap),
+  ));
 
   return new GraphQLObjectType({
     name: className,
     fields: () => ({
       ...propertyFields(),
       parseObjectJSON: {
-        type: JSON,
+        type: Object,
         resolve: item => item.toJSON(),
       },
     }),
   });
-})());
+});
