@@ -11,10 +11,12 @@ export default (parseClass, Type, getQuery) => ({
       type: JSON,
     }
   },
-  resolve(...args) {
-    const [value, { json }, { sessionToken }, info] = args;
-    const query = getQuery
-      ? getQuery(...args).withJSON(merge({}, query.toJSON(), { ...json }))
+  resolve(value, args, context, info) {
+    const { json } = args;
+    const { sessionToken } = context;
+    const mappedQuery = getQuery && getQuery(value, args, context, info);
+    const query = mappedQuery
+      ? mappedQuery.withJSON(merge({}, mappedQuery.toJSON(), { ...json }))
       : Parse.Query.fromJSON(parseClass, { ...json });
 
     const fields = getFieldNames(info);

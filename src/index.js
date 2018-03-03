@@ -15,7 +15,7 @@ const getSchema = (() => {
   }
 })();
 
-function parseGraphQLExpress(options) {
+export default function parseGraphQLExpress(options) {
   const {
     graphiql,
     parseSchema,
@@ -28,18 +28,10 @@ function parseGraphQLExpress(options) {
   app.use(
     '/',
     sessionTokenMiddleware,
-    graphqlHTTP(async () => ({
+    graphqlHTTP(async ({ sessionToken }) => ({
       graphiql,
       schema: schema || await getSchema(options, dynamicSchema),
+      context: { sessionToken }
     })),
   );
 }
-
-export default function parseGraphQL(options) {
-  Parse.initialize(options.appId, options.javascriptKey);
-  Parse.serverURL = options.serverURL;
-  return graphqlHTTP(async () => ({
-    graphiql: options.graphiql,
-    schema: await getSchema(options, options.dynamicSchema),
-  }));
-};
