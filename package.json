@@ -13,6 +13,14 @@
     "build": "babel src -d lib",
     "prepublishOnly": "npm run build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parse-graphql/parse-graphql-schema.git"
+  },
+  "bugs": {
+    "url": "https://github.com/parse-graphql/parse-graphql-schema/issues"
+  },
+  "homepage": "https://github.com/parse-graphql/parse-graphql-schema#readme",
   "dependencies": {
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",
