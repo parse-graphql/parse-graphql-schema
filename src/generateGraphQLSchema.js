@@ -16,7 +16,7 @@ const classTypeGetters = flow(
 
 const mapClassName = name => name.match(/^_/) ? name.substr(1) : name;
 
-export default function generateSchema(parseSchema) {
+export default function generateGraphqlSchema(parseSchema) {
   // TODO: Better way of doing this
   const types = dependencyHelper(
     baseMapping,

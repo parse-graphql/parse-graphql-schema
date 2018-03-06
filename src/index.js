@@ -1,37 +1,22 @@
-import graphqlHTTP from 'express-graphql';
-import generateSchema from './generateSchema';
+import generateGraphQLSchema from './generateGraphQLSchema';
 import fetchParseSchema from './fetchParseSchema';
 import Parse from 'parse/node';
-import express from 'express';
-import sessionTokenMiddleware from './sessionTokenMiddleware';
 
-const getSchema = (() => {
-  let schema;
-  return async (options, alwaysRecreate) => {
-    if (!schema || alwaysRecreate) {
-      schema = generateSchema(await fetchParseSchema(options));
-    }
-    return schema;
-  }
-})();
-
-export default function parseGraphQLExpress(options) {
+export default async function generateSchema(options) {
   const {
-    graphiql,
+    appId,
+    serverURL,
+    javascriptKey,
+    masterKey,
     parseSchema,
-    dynamicSchema,
   } = options;
 
-  const schema = parseSchema && generateSchema(parseSchema);
+  if (!masterKey && !parseSchema) {
+    throw new Error("One of 'masterKey' or 'parseSchema' must be set");
+  }
 
-  const app = express();
-  app.use(
-    '/',
-    sessionTokenMiddleware,
-    graphqlHTTP(async ({ sessionToken }) => ({
-      graphiql,
-      schema: schema || await getSchema(options, dynamicSchema),
-      context: { sessionToken }
-    })),
-  );
+  Parse.initialize(appId, javascriptKey);
+  Parse.serverURL = serverURL;
+
+  return generateGraphQLSchema(parseSchema || await fetchParseSchema(options));
 }
