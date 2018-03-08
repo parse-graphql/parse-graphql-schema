@@ -1,8 +1,8 @@
 import { mapValues, constant } from 'lodash/fp';
-import Object from './types/Object';
-import File from './types/File';
-import Date from './types/Date';
-import ACL from './types/ACL';
+import JSONObject from './JSONObject';
+import File from './File';
+import Date from './Date';
+import ACL from './ACL';
 import {
   GraphQLString,
   GraphQLBoolean,
@@ -13,7 +13,7 @@ export default mapValues(constant, {
   File,
   Date,
   ACL,
-  Object,
+  Object: JSONObject,
   String: GraphQLString,
   Boolean: GraphQLBoolean,
   Number: GraphQLFloat,

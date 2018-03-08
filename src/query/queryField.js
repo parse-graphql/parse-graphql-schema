@@ -7,9 +7,10 @@ import { merge } from 'lodash';
 export default (parseClass, Type, getQuery) => ({
   type: GraphQLList(Type),
   args: {
-    json: {
+    queryJSON: {
       type: JSON,
-    }
+      description: 'JSON from Parse.Query#toJSON()',
+    },
   },
   resolve(value, args, context, info) {
     const { json } = args;
