@@ -2,15 +2,21 @@ import { GraphQLObjectType } from 'graphql';
 import { mapValues, once } from 'lodash';
 import { property } from 'lodash/fp';
 import mapType from './mapType';
-import queryField from '../query/queryField'
+import queryField from '../query/field'
 import { or } from '../utils/logic'
 import Object from './JSONObject';
+import {
+  OBJECT_ID,
+  ACL,
+  CREATED_AT,
+  UPDATED_AT,
+} from '../constants/builtInFields';
 
 const builtInResolvers = {
-  objectId: property('id'),
-  ACL: item => item.getACL(),
-  createdAt: property('createdAt'),
-  updatedAt: property('updatedAt'),
+  [OBJECT_ID]: property('id'),
+  [ACL]: item => item.getACL(),
+  [CREATED_AT]: property('createdAt'),
+  [UPDATED_AT]: property('updatedAt'),
 };
 
 const normalResolver = key => item => item.get(key);

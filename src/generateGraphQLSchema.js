@@ -4,16 +4,18 @@ import camelCase from 'to-camel-case';
 import typeForClass from './types/typeForClass';
 import dependencyHelper from './utils/dependencyHelper';
 import baseMapping from './types/baseMapping';
-import queryForType from './query/queryField';
+import queryForType from './query/field';
 import typeForPointer from './types/typeForPointer';
-import create from './mutation/create';
-import update from './mutation/update'
+import create from './mutation/create/field';
+import update from './mutation/update/field'
+
+const schemaArrayToObject = reduce((obj, data) => ({
+  ...obj,
+  [data.className]: data,
+}), {});
 
 const classTypeGetters = flow(
-  reduce((obj, data) => ({
-    ...obj,
-    [data.className]: data,
-  }), {}),
+  schemaArrayToObject,
   mapValues(typeForClass),
 );
 
@@ -22,7 +24,6 @@ const mapClassName = name => name.match(/^_/) ? name.substr(1) : name;
 const mutationField = (type, name) => type + mapClassName(name);
 
 export default function generateGraphqlSchema(parseSchema) {
-  // TODO: Better way of doing this
   const types = dependencyHelper(
     baseMapping,
     {
@@ -36,10 +37,22 @@ export default function generateGraphqlSchema(parseSchema) {
     [className]: queryForType(className, types[className]()),
   }), {});
 
-  const mutationFields = parseSchema.reduce((obj, { className }) => ({
+  const mutationFields = parseSchema.reduce((obj, { className, fields }) => ({
     ...obj,
-    [mutationField('create', className)]: create(className, types[className]()),
-    [mutationField('update', className)]: update(className, types[className]()),
+
+    [mutationField('create', className)]:
+      create({
+        className,
+        fields,
+        displayName: mapClassName(className),
+      }, types[className]()),
+
+    [mutationField('update', className)]:
+      update({
+        className,
+        fields,
+        displayName: mapClassName(className),
+      }, types[className]()),
   }), {});
 
   const query = new GraphQLObjectType({

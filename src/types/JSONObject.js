@@ -42,7 +42,6 @@ function parseJSONLiteral(ast) {
   }
 }
 
-
 export default new GraphQLScalarType({
   name: 'JSONObject',
   serialize: identity,
