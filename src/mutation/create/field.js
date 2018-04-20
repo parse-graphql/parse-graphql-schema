@@ -1,15 +1,17 @@
 import Parse from 'parse/node';
 import JSONObject from '../../types/JSONObject'
-import createInputType from './inputType'
+import inputType from './inputType'
 
 export default ({ className, displayName, fields }, Type) => ({
   type: Type,
+  description: `Create a new ${displayName}`,
   args: {
     data: {
-      type: createInputType({ className, displayName, fields }),
+      type: inputType({ className, displayName, fields }),
     },
-    newProperties: {
+    newAttributes: {
       type: JSONObject,
+      description: "Allows saving attributes that don't exist yet"
     }
   },
   resolve(value, args, { sessionToken }) {

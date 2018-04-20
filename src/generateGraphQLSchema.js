@@ -8,6 +8,7 @@ import queryForType from './query/field';
 import typeForPointer from './types/typeForPointer';
 import create from './mutation/create/field';
 import update from './mutation/update/field'
+import deleteField from './mutation/delete/field';
 
 const schemaArrayToObject = reduce((obj, data) => ({
   ...obj,
@@ -53,6 +54,13 @@ export default function generateGraphqlSchema(parseSchema) {
         fields,
         displayName: mapClassName(className),
       }, types[className]()),
+
+    [mutationField('delete', className)]:
+      deleteField({
+        className,
+        fields,
+        displayName: mapClassName(className)
+      }, types[className]())
   }), {});
 
   const query = new GraphQLObjectType({

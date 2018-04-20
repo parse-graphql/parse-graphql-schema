@@ -1,25 +1,28 @@
 import Parse from 'parse/node';
+import { GraphQLNonNull } from 'graphql';
 import JSONObject from '../../types/JSONObject';
-import updateInputType from './inputType';
+import inputType from './inputType';
 
 export default ({ className, displayName, fields }, Type) => ({
   type: Type,
+  description: `Update an existing ${displayName}`,
   args: {
-    data: {
-      type: updateInputType({ className, displayName, fields }),
+    input: {
+      type: GraphQLNonNull(inputType({ className, displayName, fields })),
     },
-    newProperties: {
+    newAttributes: {
       type: JSONObject,
+      description: "Allows saving attributes that don't exist yet"
     },
   },
-  async resolve(value, { data, newProperties }, { sessionToken }, info) {
-    const existing = await new Parse.Query(className).get(data.objectId);
+  async resolve(value, { input, newAttributes }, { sessionToken }) {
+    const existing = await new Parse.Query(className).get(input.objectId);
     if (!existing) {
       throw new Error('Item not found');
     }
     const object = new Parse.Object(className, {
-      ...data,
-      ...newProperties,
+      ...input,
+      ...newAttributes,
     });
     return object.save({ sessionToken });
   },
