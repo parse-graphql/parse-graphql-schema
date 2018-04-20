@@ -6,7 +6,7 @@ export default ({ className, displayName, fields }, Type) => ({
   type: Type,
   description: `Create a new ${displayName}`,
   args: {
-    data: {
+    input: {
       type: inputType({ className, displayName, fields }),
     },
     newAttributes: {
@@ -15,13 +15,13 @@ export default ({ className, displayName, fields }, Type) => ({
     }
   },
   resolve(value, args, { sessionToken }) {
-    const { data, newProperties } = args;
-    if (newProperties && 'objectId' in newProperties) {
+    const { input, newAttributes } = args;
+    if (newAttributes && 'objectId' in newAttributes) {
       throw new Error('objectId not allowed in a create mutation');
     }
     const object = new Parse.Object(className, {
-      ...data,
-      ...newProperties,
+      ...input,
+      ...newAttributes,
     });
     return object.save({ sessionToken });
   },
