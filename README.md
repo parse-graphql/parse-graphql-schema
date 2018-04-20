@@ -1,6 +1,6 @@
-# Parse GraphQL Schema [![npm (scoped)](https://img.shields.io/npm/v/@parse-graphql/schema.svg)](https://www.npmjs.com/package/@parse-graphql/schema) [![CircleCI](https://circleci.com/gh/parse-graphql/parse-graphql-schema.svg?style=svg)](https://circleci.com/gh/parse-graphql/parse-graphql-schema) [![Greenkeeper badge](https://badges.greenkeeper.io/parse-graphql/parse-graphql-schema.svg)](https://greenkeeper.io/) [<img src="https://raw.githubusercontent.com/parse-graphql/art/master/logo.svg?sanitize=true" width="100" height="100" align="right" alt="Parse GraphQL Logo">](https://github.com/parse-graphql)
+# Parse GraphQL Schema [<img src="https://raw.githubusercontent.com/parse-graphql/art/master/logo.svg?sanitize=true" width="100" height="100" align="right" alt="Parse GraphQL Logo">](https://github.com/parse-graphql)
 
-**WIP**
+[![npm (scoped)](https://img.shields.io/npm/v/@parse-graphql/schema.svg)](https://www.npmjs.com/package/@parse-graphql/schema) ![stability-experimental](https://img.shields.io/badge/stability-experimental-orange.svg) [![Greenkeeper badge](https://badges.greenkeeper.io/parse-graphql/parse-graphql-schema.svg)](https://greenkeeper.io/) [![CircleCI](https://circleci.com/gh/parse-graphql/parse-graphql-schema.svg?style=svg)](https://circleci.com/gh/parse-graphql/parse-graphql-schema) 
 
 ## Project Goals
 
