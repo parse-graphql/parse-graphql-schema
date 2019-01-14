@@ -1,8 +1,9 @@
 import Parse from 'parse/node';
 import { GraphQLNonNull, GraphQLString } from 'graphql';
+import payloadType from './payloadType';
 
 export default ({ className, displayName }, Type) => ({
-  type: Type,
+  type: payloadType({ className, displayName }, Type),
   description: `Delete a ${displayName}. The deleted object is returned.`,
   args: {
     objectId: {

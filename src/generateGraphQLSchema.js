@@ -1,6 +1,6 @@
 import { flow, reduce, mapValues, mapKeys } from 'lodash/fp';
 import { GraphQLSchema, GraphQLObjectType } from 'graphql';
-import camelCase from 'to-camel-case';
+import { camel } from 'change-case';
 import typeForClass from './types/typeForClass';
 import dependencyHelper from './utils/dependencyHelper';
 import baseMapping from './types/baseMapping';
@@ -66,7 +66,7 @@ export default function generateGraphqlSchema(parseSchema) {
   const query = new GraphQLObjectType({
     name: 'Query',
     fields: mapKeys(
-      flow(mapClassName, camelCase),
+      flow(mapClassName, camel),
       queryFields,
     ),
   });

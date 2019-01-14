@@ -25,11 +25,11 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-runtime": "^6.26.0",
+    "change-case": "^3.0.2",
     "graphql-list-fields": "^2.0.1",
     "graphql-type-json": "^0.2.0",
     "lodash": "^4.17.5",
-    "parse": "^1.11.0",
-    "to-camel-case": "^1.0.0"
+    "parse": "^1.11.0"
   },
   "peerDependencies": {
     "graphql": "^0.13.1"
