@@ -1011,9 +1011,10 @@ graphql-list-fields@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/graphql-list-fields/-/graphql-list-fields-2.0.1.tgz#06d921eddfbadafa66970e21ff0acdab3cf039db"
 
-graphql-type-json@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.2.0.tgz#34c1a5fc2b7707a367c436482b253dbeebf1130e"
+graphql-type-json@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/graphql-type-json/-/graphql-type-json-0.3.0.tgz#bb32e1b74bf52ebc690f9df12b4067bc061f818a"
+  integrity sha512-lnxg5HiB95yxy+/5cDKtP6pZo0zgntsOmqsjeCBXFGJ4YoMF3+1YaSEKWJntNTu+VsAm3zf6lPxFpp1kxzofLA==
 
 graphql@^0.13.1:
   version "0.13.1"
