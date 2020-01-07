@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/parse-graphql/parse-graphql-schema#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.1",
     "babel-runtime": "^6.26.0",
     "change-case": "^3.0.2",
     "graphql-list-fields": "^2.0.1",
